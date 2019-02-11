@@ -48,6 +48,10 @@ public class BearLakeView extends SurfaceView {
     }
 
     private void init() {
+        int backgroundSize = Math.min(getWidth(), getHeight());
+        Speeds.getInstance().setBearX((float)backgroundSize / 2);
+        Speeds.getInstance().setBearY((float)backgroundSize / 2);
+
         backgroundPaint = new Paint();
         backgroundPaint.setStyle(Paint.Style.FILL);
         backgroundPaint.setColor(Color.YELLOW);
@@ -73,6 +77,9 @@ public class BearLakeView extends SurfaceView {
         handler = new Handler();
         loopThread = new LoopThread(this);
         surfaceHolder = getHolder();
+
+
+
         surfaceHolder.addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder surfaceHolder) {
@@ -126,11 +133,27 @@ public class BearLakeView extends SurfaceView {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        //kiolvasas
+        float oldHumanX = Speeds.getInstance().getHumanX();
+        float oldHumanY = Speeds.getInstance().getHumanY();
+        float oldBearX = Speeds.getInstance().getBearX();
+        float oldBearY = Speeds.getInstance().getBearY();
+        double oldHumanAngle = Speeds.getInstance().getHumanAngle();
+
+        int humanSpeed = Speeds.getInstance().getHumanSpeed();
+        int bearSpeed = Speeds.getInstance().getBearSpeed();
+
         int backgroundSize = Math.min(getWidth(), getHeight());
         canvas.drawRect(0, 0, backgroundSize, backgroundSize, backgroundPaint);
 
-        int personSize = backgroundSize / 10;
-        int bearSize = backgroundSize / 10;
+        //? fent buggol?
+        if (oldBearX == 0f && oldBearY == 0f){
+            oldBearX = backgroundSize / 2f;
+            oldBearY = backgroundSize / 2f;
+        }
+
+        int personSize = backgroundSize / 15;
+        int bearSize = backgroundSize / 15;
 
         int lakeSize = backgroundSize - (2 * personSize);
         canvas.drawCircle(lakeSize / 2f + personSize, lakeSize / 2f + personSize, lakeSize / 2f, lakePaint);
@@ -139,31 +162,81 @@ public class BearLakeView extends SurfaceView {
         int radius_main = (backgroundSize / 2) - (personSize / 2);
         int centerX = backgroundSize / 2;
         int centerY = backgroundSize / 2;
-        double startAngle = -Math.PI / 2f;
-        double angle = startAngle + (index * ((2 * Math.PI) / maxIndex));
+        //double startAngle = -Math.PI / 2f;
+        double angle = oldHumanAngle + (humanSpeed / 50f * ((2 * Math.PI) / maxIndex));
 
         int personCx = (int) (centerX + Math.cos(angle) * radius_main);
         int personCy = (int) (centerY + Math.sin(angle) * radius_main);
+        oldHumanX = personCx;
+        oldHumanY = personCy;
         canvas.drawCircle(personCx, personCy, personSize / 2f, personPaint);
 
+        //medve az elozo lepest nezze? most azt fogja.
 
-        bearStepX = (float) (Math.cos(angle) * index);
-        bearStepY = (float) (Math.sin(angle) * index);
-        float bearCx = (backgroundSize / 2f + bearStepX);
-        float bearCy = (backgroundSize / 2f + bearStepY);
-        canvas.drawCircle(bearCx, bearCy, bearSize / 2f, bearPaint);
+        //koordgeo
+        /*double humanX = radius_main * Math.cos(oldHumanAngle);
+        double humanY = radius_main * Math.sin(oldHumanAngle);*/
+
+        /*
+        Norm = Sqrt((X2-X1)*(X2-X1) + (Y2-Y1)*(Y2-Y1)) // check for 0
+        Dir_X = (X2 - X1) / Norm
+        Dir_Y = (Y2 - Y1) / Norm
+        Label_X = X1 + 20 * Dir_X
+        Label_Y = Y1 + 20 * Dir_Y
+         */
+
+        /*double norm = Math.sqrt((oldHumanX-oldBearX)*(oldHumanX-oldBearX) + (oldHumanY-oldBearY) * (oldHumanY-oldBearY));
+        norm = norm == 0 ? 1 : norm;
+        double directionX = (oldHumanX-oldBearX) / norm;
+        double directionY = (oldHumanY-oldBearY) / norm;*/
+
+        double bearAngle = Math.atan2(oldHumanX-oldBearX, oldHumanY-oldBearY);
+
+        double directionX = oldBearX + Math.sin(bearAngle) * bearSpeed / 15;
+
+        double directionY = oldBearY + Math.cos(bearAngle) * bearSpeed / 15;
 
 
-        bearPath.moveTo(bearCx, bearCy);
-        bearPath.lineTo(personCx, personCy);
-        canvas.drawPath(bearPath, bearPathPaint);
+        /*
+        //igy elole menekul
+        double bearAngle = Math.atan2(oldBearY-oldHumanY, oldBearX-oldHumanX);
 
-        if (index < maxIndex) {
+        double directionY = oldBearY + Math.sin(bearAngle) * bearSpeed / 10;
+
+        double directionX = oldBearX + Math.cos(bearAngle) * bearSpeed / 10;*/
+
+        //bearStepX = (float) (Math.cos(angle) * index);
+        //bearStepX = (float) (Math.cos(angle) * bearSpeed);
+        //bearStepX = (float) (oldBearX + bearSpeed / 100 * directionX);
+        bearStepX = (float) directionX;
+        //bearStepY = (float) (Math.sin(angle) * index);
+        //bearStepY = (float) (Math.sin(angle) * bearSpeed);
+        //bearStepY = (float) (oldBearY + bearSpeed / 100 * directionY);
+        bearStepY = (float) directionY;
+        /*float bearCx = (backgroundSize / 2f + bearStepX);
+        float bearCy = (backgroundSize / 2f + bearStepY);*/
+        canvas.drawCircle(bearStepX, bearStepY, bearSize / 2f, bearPaint);
+
+
+        //bearPath.moveTo(bearCx, bearCy);
+        bearPath.moveTo(bearStepX, bearStepY);
+        //bearPath.lineTo(personCx, personCy);
+
+        /*Speeds.getInstance().setBearX(bearCx);
+        Speeds.getInstance().setBearY(bearCy);*/
+        Speeds.getInstance().setBearX(bearStepX);
+        Speeds.getInstance().setBearY(bearStepY);
+        Speeds.getInstance().setHumanX(personCx);
+        Speeds.getInstance().setHumanY(personCx);
+        Speeds.getInstance().setHumanAngle(angle);
+        //canvas.drawPath(bearPath, bearPathPaint);
+
+        /*if (index < maxIndex) {
             index++;
         } else {
             index = 1;
             stop();
-        }
+        }*/
 
     }
 

@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TextView nevem = findViewById(R.id.nevem);
-        nevem.setText("Egedi Balázs László - 2019 - 2. hét");
+        nevem.setText("Egedi Balázs László - 2019 - előleadás");
 
 
         SeekBar humanSpeed = findViewById(R.id.humanSpeed);

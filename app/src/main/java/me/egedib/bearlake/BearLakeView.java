@@ -31,6 +31,8 @@ public class BearLakeView extends SurfaceView {
 
     private Path bearPath;
 
+    private ViewListener listener;
+
     public BearLakeView(Context context) {
         super(context);
         init();
@@ -49,6 +51,10 @@ public class BearLakeView extends SurfaceView {
     public BearLakeView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr);
         init();
+    }
+
+    public void setListener(ViewListener listener){
+        this.listener = listener;
     }
 
     private void init() {
@@ -186,7 +192,9 @@ public class BearLakeView extends SurfaceView {
         Speeds.getInstance().setHumanAngle(angle);
 
         if (Math.abs(bearStepX - personCx) < 5 && Math.abs(bearStepY - personCy) < 5 ){
-            Toast.makeText(this.getContext(), "hahh", Toast.LENGTH_LONG).show();
+            if(listener != null){
+                listener.showMessage("hahh");
+            }
             stop();
         }
 

@@ -16,6 +16,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 
 public class BearLakeView extends SurfaceView {
 
@@ -32,6 +34,8 @@ public class BearLakeView extends SurfaceView {
     private Path bearPath;
 
     private ViewListener listener;
+
+    private CoordPairs coordPairs = new CoordPairs();
 
     public BearLakeView(Context context) {
         super(context);
@@ -110,6 +114,7 @@ public class BearLakeView extends SurfaceView {
     }
 
     private void start() {
+        Speeds.getInstance().setCoordPairs(new ArrayList<CoordPairs>());
         if (!loopThread.isRunning()) {
             loopThread.start();
             loopThread.setRunning(true);
@@ -188,8 +193,11 @@ public class BearLakeView extends SurfaceView {
         Speeds.getInstance().setBearX(bearStepX);
         Speeds.getInstance().setBearY(bearStepY);
         Speeds.getInstance().setHumanX(personCx);
-        Speeds.getInstance().setHumanY(personCx);
+        Speeds.getInstance().setHumanY(personCy);
         Speeds.getInstance().setHumanAngle(angle);
+
+        coordPairs.SetCoordPairs(personCx, personCy, bearStepX, bearStepY);
+        Speeds.getInstance().addToCoordPairs(coordPairs);
 
         if (Math.abs(bearStepX - personCx) < 5 && Math.abs(bearStepY - personCy) < 5 ){
             if(listener != null){

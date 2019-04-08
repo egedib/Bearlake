@@ -1,5 +1,7 @@
 package me.egedib.bearlake;
 
+import java.util.ArrayList;
+
 public class Speeds {
     private static final Speeds ourInstance = new Speeds();
 
@@ -83,7 +85,21 @@ public class Speeds {
 
     private boolean isFinal = false;
 
-    private Speeds() {
-
+    public ArrayList<CoordPairs> getCoordPairs() {
+        return coordPairs;
     }
+
+    public void setCoordPairs(ArrayList<CoordPairs> coordPairs) {
+        this.coordPairs = coordPairs;
+    }
+
+    public void addToCoordPairs(CoordPairs coordPairsToBeInserted){
+        coordPairs.add(coordPairsToBeInserted);
+    }
+
+    private ArrayList<CoordPairs> coordPairs = new ArrayList<>();
+
+
+
+    private Speeds() {}
 }

@@ -12,10 +12,12 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Pair;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.Toast;
 
+import java.lang.annotation.Documented;
 import java.util.ArrayList;
 
 
@@ -36,6 +38,9 @@ public class BearLakeView extends SurfaceView {
     private ViewListener listener;
 
     private CoordPairs coordPairs = new CoordPairs();
+
+    private Pair<Float,Float> humanSpeedModifier;
+    private Pair<Float,Float> posModifier;
 
     public BearLakeView(Context context) {
         super(context);
@@ -63,8 +68,11 @@ public class BearLakeView extends SurfaceView {
 
     private void init() {
         int backgroundSize = Math.min(getWidth(), getHeight());
-        Speeds.getInstance().setBearX((float)backgroundSize / 2);
-        Speeds.getInstance().setBearY((float)backgroundSize / 2);
+        Speeds.getInstance().setBearX((float)backgroundSize / 2 * Speeds.getInstance().getBearX() / 100 );
+        Speeds.getInstance().setBearY((float)backgroundSize / 2 * Speeds.getInstance().getBearY() / 100 );
+        humanSpeedModifier = new Pair<>(Speeds.getInstance().getBearX() / 100, Speeds.getInstance().getBearY() / 100);
+
+
 
         backgroundPaint = new Paint();
         backgroundPaint.setStyle(Paint.Style.FILL);
@@ -109,6 +117,7 @@ public class BearLakeView extends SurfaceView {
             public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
                 stop();
             }
+
         });
 
     }
@@ -158,8 +167,8 @@ public class BearLakeView extends SurfaceView {
 
         //? fent buggol?
         if (oldBearX == 0f && oldBearY == 0f){
-            oldBearX = backgroundSize / 2f;
-            oldBearY = backgroundSize / 2f;
+            oldBearX = backgroundSize / 2f /** Speeds.getInstance().getBearX() / 100*/ ;
+            oldBearY = backgroundSize / 2f /** Speeds.getInstance().getBearX() / 100*/ ;
         }
 
         int personSize = backgroundSize / 15;

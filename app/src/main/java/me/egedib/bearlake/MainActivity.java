@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements ViewListener{
 
+    final String SpeedHuman = "SpeedHuman";
+    final String SpeedBear = "SpeedBear";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,11 +50,17 @@ public class MainActivity extends AppCompatActivity implements ViewListener{
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
+
          Bundle bundle = getIntent().getExtras();
-         Pair<Integer,Integer> speeds = (Pair)bundle.get("Speeds");
-         //TODO
-        if (bundle.get("Pos") != null){
-            //TODO
+         humanSpeed.setProgress(bundle.getInt(SpeedHuman));
+         bearSpeed.setProgress(bundle.getInt(SpeedBear));
+
+        if (bundle.get("PosX") != null){
+            Speeds.getInstance().setBearX((int)bundle.get("PosX"));
+            Speeds.getInstance().setBearY((int)bundle.get("PosY"));
+        } else{
+            Speeds.getInstance().setBearX(0);
+            Speeds.getInstance().setBearY(0);
         }
 
         ((BearLakeView)findViewById(R.id.bear_lake_view)).setListener(this);

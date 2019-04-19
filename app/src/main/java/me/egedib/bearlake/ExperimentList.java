@@ -27,7 +27,6 @@ public class ExperimentList extends AppCompatActivity {
         Eset0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("gomb0", "katt");
                 startActivity(openWindow.putExtra(SpeedHuman, 1).putExtra(SpeedBear, 1));
             }
         });
@@ -59,26 +58,5 @@ public class ExperimentList extends AppCompatActivity {
                         startActivity(openWindow.putExtra(SpeedHuman, 1).putExtra(SpeedBear, 1).putExtra("PosX", new Random().nextInt(100)).putExtra("PosY", new Random().nextInt(100)));
                     }
                 });
-
-
-
-            /*super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_experiment_list)
-
-    Eset0.setOnClickListener{
-        startActivity(Intent(this, MainActivity::class.java).putExtras("Speeds", APair<Int,Int>(1,1)))
-    }
-    Eset1.setOnClickListener{
-        startActivity(Intent(this, MainActivity::class.java).putExtra("Speeds",Pair(25,10)))
-    }
-    Eset2.setOnClickListener{
-        startActivity(Intent(this, MainActivity::class.java).putExtra("Speeds",Pair(15,100)))
-    }
-    Eset3.setOnClickListener{
-        startActivity(Intent(this, MainActivity::class.java).putExtra("Speeds",Pair(Random.nextInt(100),Random.nextInt(100))))
-    }
-    Eset4.setOnClickListener{
-        startActivity(Intent(this, MainActivity::class.java).putExtra("Speeds",Pair(25,10)).putExtra("Pos", Pair(Random.nextInt(25,100), Random.nextInt(25,100))))
-    }*/
     }
 }

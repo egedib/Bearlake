@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -115,6 +116,7 @@ public class BearLakeView extends SurfaceView {
 
             @Override
             public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+
                 stop();
             }
 
@@ -205,14 +207,15 @@ public class BearLakeView extends SurfaceView {
         Speeds.getInstance().setHumanY(personCy);
         Speeds.getInstance().setHumanAngle(angle);
 
-        coordPairs.SetCoordPairs(personCx, personCy, bearStepX, bearStepY);
+        //coordPairs.SetCoordPairs(personCx, personCy, bearStepX, bearStepY);
+        coordPairs = new CoordPairs(personCx, personCy, bearStepX, bearStepY);
         Speeds.getInstance().addToCoordPairs(coordPairs);
 
         if (Math.abs(bearStepX - personCx) < 5 && Math.abs(bearStepY - personCy) < 5 ){
             if(listener != null){
                 listener.showMessage("hahh");
             }
-            stop();
+            this.stop();
         }
 
     }
@@ -244,6 +247,8 @@ public class BearLakeView extends SurfaceView {
             long sleepTime;
             Looper.prepare();
 
+
+
             while (running) {
                 startTime = System.currentTimeMillis();
 
@@ -269,6 +274,7 @@ public class BearLakeView extends SurfaceView {
                     e.printStackTrace();
                 }
             }
+            this.running = false;
         }
     }
 }

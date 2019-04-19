@@ -1,6 +1,6 @@
 package me.egedib.bearlake;
 
-// TODO: Igen ez így csúnya -> lehetne így tárolni a medve és embert, ahelyett, hogy get/set lenne koordinátánként.
+// TODO: Ez így csúnya -> lehetne így tárolni a medve és embert, ahelyett, hogy get/set lenne koordinátánként.
 public class CoordPairs {
 
     private float humanX;

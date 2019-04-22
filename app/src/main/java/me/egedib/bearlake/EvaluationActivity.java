@@ -59,7 +59,7 @@ public class EvaluationActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent setIntent = new Intent(Intent.ACTION_MAIN);
+        Intent setIntent = new Intent(getApplicationContext(), ExperimentList.class);
         setIntent.addCategory(Intent.CATEGORY_HOME);
         setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         finish();

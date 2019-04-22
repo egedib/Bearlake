@@ -69,6 +69,7 @@ public class BearLakeView extends SurfaceView {
 
     private void init() {
         int backgroundSize = Math.min(getWidth(), getHeight());
+        Speeds.getInstance().reset();
         Speeds.getInstance().setBearX((float)backgroundSize / 2 * Speeds.getInstance().getBearX() / 100 );
         Speeds.getInstance().setBearY((float)backgroundSize / 2 * Speeds.getInstance().getBearY() / 100 );
         humanSpeedModifier = new Pair<>(Speeds.getInstance().getBearX() / 100, Speeds.getInstance().getBearY() / 100);
@@ -85,11 +86,11 @@ public class BearLakeView extends SurfaceView {
 
         bearPaint = new Paint();
         bearPaint.setStyle(Paint.Style.FILL);
-        bearPaint.setColor(Color.RED);
+        bearPaint.setColor(Color.rgb(139,69,19));
 
         personPaint = new Paint();
         personPaint.setStyle(Paint.Style.FILL);
-        personPaint.setColor(Color.MAGENTA);
+        personPaint.setColor(Color.rgb(105,105,105));
 
         bearPathPaint = new Paint();
         bearPathPaint.setColor(Color.YELLOW);
@@ -213,9 +214,10 @@ public class BearLakeView extends SurfaceView {
 
         if (Math.abs(bearStepX - personCx) < 5 && Math.abs(bearStepY - personCy) < 5 ){
             if(listener != null){
-                listener.showMessage("hahh");
+                listener.showMessage("Elkapta!");
             }
-            this.stop();
+            //this.stop();
+            loopThread.setRunning(false);
         }
 
     }

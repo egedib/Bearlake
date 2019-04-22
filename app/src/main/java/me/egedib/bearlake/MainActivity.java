@@ -69,8 +69,9 @@ public class MainActivity extends AppCompatActivity implements ViewListener{
 
     @Override
     public void showMessage(final String message) {
-        finish();
-        startActivity(new Intent(getApplicationContext(), EvaluationActivity.class));        runOnUiThread(new Runnable() {
+        //finish();
+        startActivity(new Intent(getApplicationContext(), EvaluationActivity.class));
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();

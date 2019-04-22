@@ -100,6 +100,16 @@ public class Speeds {
     private ArrayList<CoordPairs> coordPairs = new ArrayList<>();
 
 
+    public void reset(){
+        humanX = 0f;
+        humanY = 0f;
+        humanSpeed = 0;
+        bearSpeed = 0;
+        humanAngle = 0;
+        bearX = 0f;
+        bearY = 0f;
+        coordPairs = new ArrayList<>();
+    }
 
     private Speeds() {}
 }

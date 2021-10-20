@@ -6,4 +6,4 @@ Adott egy tó, melynek a közepén van a medve, aki éppen úszik. Adott még az
 
 Amennyiben a medve kiért a tóból, vége a dalnak.
 
-A programmal lehetőség nyílik megvizsgálni, hogy milyen sebesség kombinációknál a medve meg tudja-e enni az embert.
+A programmal lehetőség nyílik megvizsgálni, hogy milyen sebesség kombinációknál tudja a medve megenni az embert.

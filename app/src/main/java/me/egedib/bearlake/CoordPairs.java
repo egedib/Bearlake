@@ -12,33 +12,18 @@ public class CoordPairs {
         return humanX;
     }
 
-    public void setHumanX(float humanX) {
-        this.humanX = humanX;
-    }
-
     public float getHumanY() {
         return humanY;
-    }
-
-    public void setHumanY(float humanY) {
-        this.humanY = humanY;
     }
 
     public float getBearX() {
         return bearX;
     }
 
-    public void setBearX(float bearX) {
-        this.bearX = bearX;
-    }
-
     public float getBearY() {
         return bearY;
     }
 
-    public void setBearY(float bearY) {
-        this.bearY = bearY;
-    }
 
     public CoordPairs(float humanX, float humanY, float bearX, float bearY) {
         this.humanX = humanX;
@@ -46,13 +31,4 @@ public class CoordPairs {
         this.bearX = bearX;
         this.bearY = bearY;
     }
-
-    public void SetCoordPairs(float humanX, float humanY, float bearX, float bearY){
-        this.bearX = bearX;
-        this.bearY = bearY;
-        this.humanX = humanX;
-        this.humanY = humanY;
-    }
-
-    public CoordPairs() {}
 }

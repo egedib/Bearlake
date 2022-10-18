@@ -6,37 +6,28 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.os.Handler;
 import android.os.Looper;
-import androidx.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Pair;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
 
 public class BearLakeView extends SurfaceView {
 
-    private SurfaceHolder surfaceHolder;
     private LoopThread loopThread;
-    private Handler handler;
 
     private Paint backgroundPaint;
     private Paint lakePaint;
     private Paint bearPaint;
     private Paint personPaint;
-    private Paint bearPathPaint;
 
     private Path bearPath;
 
     private ViewListener listener;
-
-    private CoordPairs coordPairs = new CoordPairs();
-
-    private Pair<Float,Float> humanSpeedModifier;
-    private Pair<Float,Float> posModifier;
 
     public BearLakeView(Context context) {
         super(context);
@@ -53,11 +44,6 @@ public class BearLakeView extends SurfaceView {
         init();
     }
 
-    public BearLakeView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr);
-        init();
-    }
-
     public void setListener(ViewListener listener){
         this.listener = listener;
     }
@@ -67,9 +53,6 @@ public class BearLakeView extends SurfaceView {
         Speeds.getInstance().reset();
         Speeds.getInstance().setBearX((float)backgroundSize / 2 * Speeds.getInstance().getBearX() / 100 );
         Speeds.getInstance().setBearY((float)backgroundSize / 2 * Speeds.getInstance().getBearY() / 100 );
-        humanSpeedModifier = new Pair<>(Speeds.getInstance().getBearX() / 100, Speeds.getInstance().getBearY() / 100);
-
-
 
         backgroundPaint = new Paint();
         backgroundPaint.setStyle(Paint.Style.FILL);
@@ -87,17 +70,14 @@ public class BearLakeView extends SurfaceView {
         personPaint.setStyle(Paint.Style.FILL);
         personPaint.setColor(Color.rgb(105,105,105));
 
-        bearPathPaint = new Paint();
+        Paint bearPathPaint = new Paint();
         bearPathPaint.setColor(Color.YELLOW);
         bearPathPaint.setStyle(Paint.Style.STROKE);
 
         bearPath = new Path();
 
-        handler = new Handler();
         loopThread = new LoopThread(this);
-        surfaceHolder = getHolder();
-
-
+        SurfaceHolder surfaceHolder = getHolder();
 
         surfaceHolder.addCallback(new SurfaceHolder.Callback() {
             @Override
@@ -121,7 +101,7 @@ public class BearLakeView extends SurfaceView {
     }
 
     private void start() {
-        Speeds.getInstance().setCoordPairs(new ArrayList<CoordPairs>());
+        Speeds.getInstance().setCoordPairs(new ArrayList<>());
         if (!loopThread.isRunning()) {
             loopThread.start();
             loopThread.setRunning(true);
@@ -151,8 +131,8 @@ public class BearLakeView extends SurfaceView {
         super.onDraw(canvas);
 
         //kiolvasas
-        float oldHumanX = Speeds.getInstance().getHumanX();
-        float oldHumanY = Speeds.getInstance().getHumanY();
+        float oldHumanX;
+        float oldHumanY;
         float oldBearX = Speeds.getInstance().getBearX();
         float oldBearY = Speeds.getInstance().getBearY();
         double oldHumanAngle = Speeds.getInstance().getHumanAngle();
@@ -165,8 +145,8 @@ public class BearLakeView extends SurfaceView {
 
         //? fent buggol?
         if (oldBearX == 0f && oldBearY == 0f){
-            oldBearX = backgroundSize / 2f /** Speeds.getInstance().getBearX() / 100*/ ;
-            oldBearY = backgroundSize / 2f /** Speeds.getInstance().getBearX() / 100*/ ;
+            oldBearX = backgroundSize / 2f /* Speeds.getInstance().getBearX() / 100*/ ;
+            oldBearY = backgroundSize / 2f /* Speeds.getInstance().getBearX() / 100*/ ;
         }
 
         int personSize = backgroundSize / 15;
@@ -200,27 +180,25 @@ public class BearLakeView extends SurfaceView {
         Speeds.getInstance().setBearX(bearStepX);
         Speeds.getInstance().setBearY(bearStepY);
         Speeds.getInstance().setHumanX(personCx);
-        Speeds.getInstance().setHumanY(personCy);
+        Speeds.getInstance().setHumanY();
         Speeds.getInstance().setHumanAngle(angle);
 
-        //coordPairs.SetCoordPairs(personCx, personCy, bearStepX, bearStepY);
-        coordPairs = new CoordPairs(personCx, personCy, bearStepX, bearStepY);
+        CoordPairs coordPairs = new CoordPairs(personCx, personCy, bearStepX, bearStepY);
         Speeds.getInstance().addToCoordPairs(coordPairs);
 
         if (Math.abs(bearStepX - personCx) < 5 && Math.abs(bearStepY - personCy) < 5 ){
             if(listener != null){
                 listener.showMessage("Elkapta!");
             }
-            //this.stop();
             loopThread.setRunning(false);
         }
 
     }
 
-    public class LoopThread extends Thread {
+    public static class LoopThread extends Thread {
 
         static final long FPS = 60;
-        private BearLakeView view;
+        private final BearLakeView view;
         private boolean running = false;
 
 

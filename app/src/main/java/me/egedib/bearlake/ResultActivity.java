@@ -6,7 +6,6 @@ import android.os.Bundle;
 import java.util.ArrayList;
 
 public class ResultActivity extends AppCompatActivity {
-    private final String COORDPAIRSARRAY = "CoordPairsArray";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,6 +15,7 @@ public class ResultActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         ArrayList<CoordPairs> history = null;
 
+        String COORDPAIRSARRAY = "CoordPairsArray";
         if ((bundle != null ? bundle.get(COORDPAIRSARRAY) : null) != null){
             history = (ArrayList<CoordPairs>)bundle.get(COORDPAIRSARRAY);
         }

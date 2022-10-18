@@ -21,17 +21,12 @@ public class EvaluationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_evaluation);
 
         ArrayList<Double> distance = new ArrayList<>();
-        ArrayList<Integer> numbers = new ArrayList<>();
 
         for (CoordPairs pair: Speeds.getInstance().getCoordPairs() ) {
             distance.add(Math.hypot(Math.abs((double)pair.getBearX() - (double)pair.getHumanX()), Math.abs((double)pair.getHumanY() - (double)pair.getBearY())));
         }
 
         LineChart lineChart = findViewById(R.id.chart);
-
-        /*for (int i = 0; i < distance.size(); i++){
-            numbers.add(i+1);
-        }*/
 
         List<Entry> entries = new ArrayList<>();
         for (int i = 0; i < distance.size(); i++){
@@ -43,7 +38,6 @@ public class EvaluationActivity extends AppCompatActivity {
         LineData lineData = new LineData(dataSet);
         lineChart.setData(lineData);
         lineChart.invalidate();
-        //finish();
     }
 
     @Override

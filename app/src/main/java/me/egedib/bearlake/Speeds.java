@@ -28,22 +28,6 @@ public class Speeds {
     private int humanSpeed;
     private int bearSpeed;
 
-    public float getHumanX() {
-        return humanX;
-    }
-
-    public void setHumanX(float humanX) {
-        this.humanX = humanX;
-    }
-
-    public float getHumanY() {
-        return humanY;
-    }
-
-    public void setHumanY(float humanY) {
-        this.humanY = humanY;
-    }
-
     public float getBearX() {
         return bearX;
     }
@@ -60,9 +44,6 @@ public class Speeds {
         this.bearY = bearY;
     }
 
-    private float humanX = 0f;
-    private float humanY = 0f;
-
     public double getHumanAngle() {
         return humanAngle;
     }
@@ -74,16 +55,6 @@ public class Speeds {
     private double humanAngle = -Math.PI / 2f;
     private float bearX = 0f;
     private float bearY = 0f;
-
-    public boolean isFinal() {
-        return isFinal;
-    }
-
-    public void setFinal(boolean aFinal) {
-        isFinal = aFinal;
-    }
-
-    private boolean isFinal = false;
 
     public ArrayList<CoordPairs> getCoordPairs() {
         return coordPairs;
@@ -101,8 +72,6 @@ public class Speeds {
 
 
     public void reset(){
-        humanX = 0f;
-        humanY = 0f;
         humanSpeed = 0;
         bearSpeed = 0;
         humanAngle = 0;

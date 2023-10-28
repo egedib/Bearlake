@@ -1,4 +1,4 @@
-name: 'Flutter Analyze'
+name: 'Build - Debug mode'
 
 on:
   push:
@@ -12,3 +12,5 @@ jobs:
 
     steps:
       - uses: sparkfabrik/android-build-action@v1.5.0
+        with:
+          project-path: "."

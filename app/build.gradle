@@ -17,6 +17,7 @@ android {
             minifyEnabled false
         }
     }
+    namespace 'me.egedib.bearlake'
 }
 
 dependencies {

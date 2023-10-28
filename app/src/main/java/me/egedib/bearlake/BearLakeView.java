@@ -179,8 +179,6 @@ public class BearLakeView extends SurfaceView {
 
         Speeds.getInstance().setBearX(bearStepX);
         Speeds.getInstance().setBearY(bearStepY);
-        Speeds.getInstance().setHumanX(personCx);
-        Speeds.getInstance().setHumanY();
         Speeds.getInstance().setHumanAngle(angle);
 
         CoordPairs coordPairs = new CoordPairs(personCx, personCy, bearStepX, bearStepY);

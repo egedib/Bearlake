@@ -15,11 +15,9 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-
 public class BearLakeView extends SurfaceView {
 
     private LoopThread loopThread;
-
     private Paint backgroundPaint;
     private Paint lakePaint;
     private Paint bearPaint;

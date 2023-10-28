@@ -21,10 +21,7 @@ public class ResultActivity extends AppCompatActivity {
         }
 
         if (history == null){
-            //TODO: error?
             this.finish();
         }
-
-
     }
 }

@@ -12,6 +12,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - run: chmod +x gradlew
       - uses: sparkfabrik/android-build-action@v1.5.0
         with:
           project-path: .

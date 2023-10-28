@@ -1,0 +1,14 @@
+name: 'Flutter Analyze'
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: sparkfabrik/android-build-action@v1.5.0

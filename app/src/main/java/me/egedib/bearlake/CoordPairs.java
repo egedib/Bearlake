@@ -3,10 +3,10 @@ package me.egedib.bearlake;
 // TODO: Ez így csúnya -> lehetne így tárolni a medve és embert, ahelyett, hogy get/set lenne koordinátánként.
 public class CoordPairs {
 
-    private float humanX;
-    private float humanY;
-    private float bearX;
-    private float bearY;
+    private final float humanX;
+    private final float humanY;
+    private final float bearX;
+    private final float bearY;
 
     public float getHumanX() {
         return humanX;
